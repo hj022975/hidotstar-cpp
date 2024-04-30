@@ -1,6 +1,3 @@
-/**
- * Well known colors for a HiDotStar strip
- */
 enum HiDotStarColors {
     //% block=red
     Red = 0xFF0000,
@@ -23,10 +20,6 @@ enum HiDotStarColors {
     //% block=black
     Black = 0x000000
 }
-
-/**
- * Different modes for RGB or RGB+W HiDotStar strips
- */
 enum HiDotStarMode {
     //% block="RGB (GRB format)"
     RGB = 1, // not used
@@ -35,11 +28,6 @@ enum HiDotStarMode {
     //% block="RGB (RGB format)"
     RGB_RGB = 3 // always used
 }
-
-/**
- * Functions to operate HiDotStar strips.
- */
-//% weight=5 color=#2699BF icon="\uf110"
 namespace hidotstar {
     /**
      * A HiDotStar strip
@@ -158,15 +146,15 @@ namespace hidotstar {
             let v = Math.idiv((value * n), high);
             if (v == 0) {
                 this.setPixelColor(0, 0x666600);
-                for (let i = 1; i < n; ++i)
-                    this.setPixelColor(i, 0);
+                for (let j = 1; j < n; ++j)
+                    this.setPixelColor(j, 0);
             } else {
-                for (let i = 0; i < n; ++i) {
-                    if (i <= v) {
-                        const b = Math.idiv(i * 255, n1);
-                        this.setPixelColor(i, hidotstar.rgb(b, 0, 255 - b));
+                for (let k = 0; k < n; ++k) {
+                    if (k <= v) {
+                        const b = Math.idiv(k * 255, n1);
+                        this.setPixelColor(k, hidotstar.rgb(b, 0, 255 - b));
                     }
-                    else this.setPixelColor(i, 0);
+                    else this.setPixelColor(k, 0);
                 }
             }
             this.show();
@@ -218,8 +206,8 @@ namespace hidotstar {
             rgb = rgb >> 0;
             const cols = Math.idiv(this._length, this._matrixWidth);
             if (x < 0 || x >= this._matrixWidth || y < 0 || y >= cols) return;
-            let i = x + y * this._matrixWidth;
-            this.setPixelColor(i, rgb);
+            let m = x + y * this._matrixWidth;
+            this.setPixelColor(m, rgb);
         }
 
 	/**
@@ -227,9 +215,9 @@ namespace hidotstar {
 	 * @param len Number of pixels to send data for
 	 * dummy function pass through for C function
 	 */
-        //%blockId=brightboard_spi_dotstar_send_buffer blockHidden=true 
+        //% blockId=brightboard_spi_dotstar_send_buffer blockHidden=true 
         //% shim=hidotstar::spiDotStarSendBuffer
-        export function spiDotStarSendBuffer(buf: Buffer, len: number): void {         show() {
+        spiDotStarSendBuffer(buf: Buffer, len: number): void {
         }
 
         /**
@@ -240,7 +228,7 @@ namespace hidotstar {
         //% weight=79
         //% parts="hidotstar"
         show() {
-            spiDotStarSendBuffer(this.buf, this._length);
+////////            spiDotStarSendBuffer(this.buf, this._length);
 	}
 
         /**
@@ -286,22 +274,22 @@ namespace hidotstar {
         //% weight=58
         //% parts="hidotstar" advanced=true
         easeBrightness(): void {
-            const stride = this._mode === HiDotStarMode.RGBW ? 4 : 3;
+            const stride2 = this._mode === HiDotStarMode.RGBW ? 4 : 3;
             const br = this.brightness;
             const buf = this.buf;
             const end = this.start + this._length;
             const mid = Math.idiv(this._length, 2);
-            for (let i = this.start; i < end; ++i) {
-                const k = i - this.start;
-                const ledoffset = i * stride;
-                const br = k > mid
-                    ? Math.idiv(255 * (this._length - 1 - k) * (this._length - 1 - k), (mid * mid))
-                    : Math.idiv(255 * k * k, (mid * mid));
-                const r = (buf[ledoffset + 0] * br) >> 8; buf[ledoffset + 0] = r;
-                const g = (buf[ledoffset + 1] * br) >> 8; buf[ledoffset + 1] = g;
-                const b = (buf[ledoffset + 2] * br) >> 8; buf[ledoffset + 2] = b;
-                if (stride == 4) {
-                    const w = (buf[ledoffset + 3] * br) >> 8; buf[ledoffset + 3] = w;
+            for (let o = this.start; o < end; ++o) {
+                const p = o - this.start;
+                const ledoffset = o * stride2;
+                const br2 = p > mid
+                    ? Math.idiv(255 * (this._length - 1 - p) * (this._length - 1 - p), (mid * mid))
+                    : Math.idiv(255 * p * p, (mid * mid));
+                const r = (buf[ledoffset + 0] * br2) >> 8; buf[ledoffset + 0] = r;
+                const g = (buf[ledoffset + 1] * br2) >> 8; buf[ledoffset + 1] = g;
+                const c = (buf[ledoffset + 2] * br2) >> 8; buf[ledoffset + 2] = c;
+                if (stride2 == 4) {
+                    const w = (buf[ledoffset + 3] * br2) >> 8; buf[ledoffset + 3] = w;
                 }
             }
         }
@@ -340,8 +328,8 @@ namespace hidotstar {
         //% parts="hidotstar"
         shift(offset: number = 1): void {
             offset = offset >> 0;
-            const stride = this._mode === HiDotStarMode.RGBW ? 4 : 3;
-            this.buf.shift(-offset * stride, this.start * stride, this._length * stride)
+            const stride3 = this._mode === HiDotStarMode.RGBW ? 4 : 3;
+            this.buf.shift(-offset * stride3, this.start * stride3, this._length * stride3)
         }
 
         /**
@@ -355,8 +343,8 @@ namespace hidotstar {
         //% parts="hidotstar"
         rotate(offset: number = 1): void {
             offset = offset >> 0;
-            const stride = this._mode === HiDotStarMode.RGBW ? 4 : 3;
-            this.buf.rotate(-offset * stride, this.start * stride, this._length * stride)
+            const stride4 = this._mode === HiDotStarMode.RGBW ? 4 : 3;
+            this.buf.rotate(-offset * stride4, this.start * stride4, this._length * stride4)
         }
 
         /**
@@ -366,17 +354,17 @@ namespace hidotstar {
         //% strip.defl=strip
         //% advanced=true
         power(): number {
-            const stride = this._mode === HiDotStarMode.RGBW ? 4 : 3;
-            const end = this.start + this._length;
-            let p = 0;
-            for (let i = this.start; i < end; ++i) {
-                const ledoffset = i * stride;
-                for (let j = 0; j < stride; ++j) {
-                    p += this.buf[i + j];
+            const stride5 = this._mode === HiDotStarMode.RGBW ? 4 : 3;
+            const end2 = this.start + this._length;
+            let q = 0;
+            for (let t = this.start; t < end2; ++t) {
+                const ledoffset2 = t * stride5;
+                for (let u = 0; u < stride5; ++u) {
+                    q += this.buf[t + u];
                 }
             }
             return Math.idiv(this.length() * 7, 10) /* 0.7mA per hidotstar */
-                + Math.idiv(p * 480, 10000); /* rought approximation */
+                + Math.idiv(q * 480, 10000); /* rought approximation */
         }
 
         private setBufferRGB(offset: number, red: number, green: number, blue: number): void {
@@ -395,16 +383,16 @@ namespace hidotstar {
             let green = unpackG(rgb);
             let blue = unpackB(rgb);
 
-            const br = this.brightness;
-            if (br < 255) {
-                red = (red * br) >> 8;
-                green = (green * br) >> 8;
-                blue = (blue * br) >> 8;
+            const br3 = this.brightness;
+            if (br3 < 255) {
+                red = (red * br3) >> 8;
+                green = (green * br3) >> 8;
+                blue = (blue * br3) >> 8;
             }
-            const end = this.start + this._length;
-            const stride = this._mode === HiDotStarMode.RGBW ? 4 : 3;
-            for (let i = this.start; i < end; ++i) {
-                this.setBufferRGB(i * stride, red, green, blue)
+            const end3 = this.start + this._length;
+            const stride6 = this._mode === HiDotStarMode.RGBW ? 4 : 3;
+            for (let a = this.start; a < end3; ++a) {
+                this.setBufferRGB(a * stride6, red, green, blue)
             }
         }
         private setPixelRGB(pixeloffset: number, rgb: number): void {
@@ -412,20 +400,20 @@ namespace hidotstar {
                 || pixeloffset >= this._length)
                 return;
 
-            let stride = this._mode === HiDotStarMode.RGBW ? 4 : 3;
-            pixeloffset = (pixeloffset + this.start) * stride;
+            let stride7 = this._mode === HiDotStarMode.RGBW ? 4 : 3;
+            pixeloffset = (pixeloffset + this.start) * stride7;
 
-            let red = unpackR(rgb);
-            let green = unpackG(rgb);
-            let blue = unpackB(rgb);
+            let red2 = unpackR(rgb);
+            let green2 = unpackG(rgb);
+            let blue2 = unpackB(rgb);
 
-            let br = this.brightness;
-            if (br < 255) {
-                red = (red * br) >> 8;
-                green = (green * br) >> 8;
-                blue = (blue * br) >> 8;
+            let br4 = this.brightness;
+            if (br4 < 255) {
+                red2 = (red2 * br4) >> 8;
+                green2 = (green2 * br4) >> 8;
+                blue2 = (blue2 * br4) >> 8;
             }
-            this.setBufferRGB(pixeloffset, red, green, blue)
+            this.setBufferRGB(pixeloffset, red2, green2, blue2)
         }
     }
 
@@ -438,15 +426,15 @@ namespace hidotstar {
     //% parts="hidotstar"
     //% blockSetVariable=strip
     export function create(numleds: number): Strip {
-        let strip = new Strip();
-        let stride = 3;
-        strip.buf = pins.createBuffer(numleds * stride);
-        strip.start = 0;
-        strip._length = numleds;
-        strip._mode = HiDotStarMode.RGB_RGB;
-        strip._matrixWidth = 0;
-        strip.setBrightness(128);
-        return strip;
+        let strip2 = new Strip();
+        let stride8 = 3;
+        strip2.buf = pins.createBuffer(numleds * stride8);
+        strip2.start = 0;
+        strip2._length = numleds;
+        strip2._mode = HiDotStarMode.RGB_RGB;
+        strip2._matrixWidth = 0;
+        strip2.setBrightness(128);
+        return strip2;
     }
 
     /**
@@ -476,16 +464,16 @@ namespace hidotstar {
         return ((a & 0xFF) << 16) | ((b & 0xFF) << 8) | (c & 0xFF);
     }
     function unpackR(rgb: number): number {
-        let r = (rgb >> 16) & 0xFF;
-        return r;
+        let d = (rgb >> 16) & 0xFF;
+        return d;
     }
     function unpackG(rgb: number): number {
-        let g = (rgb >> 8) & 0xFF;
-        return g;
+        let e = (rgb >> 8) & 0xFF;
+        return e;
     }
     function unpackB(rgb: number): number {
-        let b = (rgb) & 0xFF;
-        return b;
+        let f = (rgb) & 0xFF;
+        return f;
     }
 
     /**
@@ -503,32 +491,32 @@ namespace hidotstar {
         h = h % 360;
         s = Math.clamp(0, 99, s);
         l = Math.clamp(0, 99, l);
-        let c = Math.idiv((((100 - Math.abs(2 * l - 100)) * s) << 8), 10000); //chroma, [0,255]
-        let h1 = Math.idiv(h, 60);//[0,6]
-        let h2 = Math.idiv((h - h1 * 60) * 256, 60);//[0,255]
-        let temp = Math.abs((((h1 % 2) << 8) + h2) - 256);
-        let x = (c * (256 - (temp))) >> 8;//[0,255], second largest component of this color
+        let c2 = Math.idiv((((100 - Math.abs(2 * l - 100)) * s) << 8), 10000); //chroma, [0,255]
+        let h12 = Math.idiv(h, 60);//[0,6]
+        let h22 = Math.idiv((h - h12 * 60) * 256, 60);//[0,255]
+        let temp = Math.abs((((h12 % 2) << 8) + h22) - 256);
+        let x = (c2 * (256 - (temp))) >> 8;//[0,255], second largest component of this color
         let r$: number;
         let g$: number;
         let b$: number;
-        if (h1 == 0) {
-            r$ = c; g$ = x; b$ = 0;
-        } else if (h1 == 1) {
-            r$ = x; g$ = c; b$ = 0;
-        } else if (h1 == 2) {
-            r$ = 0; g$ = c; b$ = x;
-        } else if (h1 == 3) {
-            r$ = 0; g$ = x; b$ = c;
-        } else if (h1 == 4) {
-            r$ = x; g$ = 0; b$ = c;
-        } else if (h1 == 5) {
-            r$ = c; g$ = 0; b$ = x;
+        if (h12 == 0) {
+            r$ = c2; g$ = x; b$ = 0;
+        } else if (h12 == 1) {
+            r$ = x; g$ = c2; b$ = 0;
+        } else if (h12 == 2) {
+            r$ = 0; g$ = c2; b$ = x;
+        } else if (h12 == 3) {
+            r$ = 0; g$ = x; b$ = c2;
+        } else if (h12 == 4) {
+            r$ = x; g$ = 0; b$ = c2;
+        } else if (h12 == 5) {
+            r$ = c2; g$ = 0; b$ = x;
         }
-        let m = Math.idiv((Math.idiv((l * 2 << 8), 100) - c), 2);
-        let r = r$ + m;
-        let g = g$ + m;
-        let b = b$ + m;
-        return packRGB(r, g, b);
+        let m2 = Math.idiv((Math.idiv((l * 2 << 8), 100) - c2), 2);
+        let r2 = r$ + m2;
+        let g2 = g$ + m2;
+        let b2 = b$ + m2;
+        return packRGB(r2, g2, b2);
     }
 
     export enum HueInterpolationDirection {

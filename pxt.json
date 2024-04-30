@@ -10,7 +10,9 @@
         "main.blocks",
         "main.ts",
         "README.md",
-	"spiSendBuffer.cpp"
+        "spiSendBuffer.cpp",
+        "shims.d.ts",
+        "enums.d.ts"
     ],
     "testFiles": [
         "test.ts"
