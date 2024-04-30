@@ -1,5 +1,5 @@
 {
-    "name": "HiDotStar",
+    "name": "HiDotStarCpp",
     "description": "",
     "dependencies": {
         "core": "*",
@@ -9,7 +9,8 @@
     "files": [
         "main.blocks",
         "main.ts",
-        "README.md"
+        "README.md",
+	"spiSendBuffer.cpp"
     ],
     "testFiles": [
         "test.ts"
