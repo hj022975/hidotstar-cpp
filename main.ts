@@ -222,6 +222,16 @@ namespace hidotstar {
             this.setPixelColor(i, rgb);
         }
 
+	/**
+	 * @param buf Buffer to send
+	 * @param len Number of pixels to send data for
+	 * dummy function pass through for C function
+	 */
+        //%blockId=brightboard_spi_dotstar_send_buffer blockHidden=true 
+        //% shim=hidotstar::spiDotStarSendBuffer
+        export function spiDotStarSendBuffer(buf: Buffer, len: number): void {         show() {
+        }
+
         /**
          * Send all the changes to the strip.
          */
@@ -230,23 +240,8 @@ namespace hidotstar {
         //% weight=79
         //% parts="hidotstar"
         show() {
-            pins.spiWrite(0); // Begin frame    
-            pins.spiWrite(0);
-            pins.spiWrite(0);
-            pins.spiWrite(0);
-            let p = 0;
-            for (let index = 0; index < this._length; index++) {
-                pins.spiWrite(255); // Brightness
-                pins.spiWrite(this.buf[p + 2]); // blue
-                pins.spiWrite(this.buf[p + 1]); // green
-                pins.spiWrite(this.buf[p]); // red
-                p += 3;
-            }
-            pins.spiWrite(255); // End frame
-            pins.spiWrite(255);
-            pins.spiWrite(255);
-            pins.spiWrite(255);
-        }
+            spiDotStarSendBuffer(this.buf, this._length);
+	}
 
         /**
          * Turn off all LEDs.
@@ -451,9 +446,6 @@ namespace hidotstar {
         strip._mode = HiDotStarMode.RGB_RGB;
         strip._matrixWidth = 0;
         strip.setBrightness(128);
-        pins.spiFrequency(1000000);
-        pins.spiFormat(8, 0);
-        pins.spiPins(DigitalPin.P15, DigitalPin.P14, DigitalPin.P13);
         return strip;
     }
 
