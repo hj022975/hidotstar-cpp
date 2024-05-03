@@ -11,7 +11,8 @@
         "main.ts",
         "README.md",
         "spiSendBuffer.cpp",
-        "enums.d.ts"
+        "enums.d.ts",
+        "shims.d.ts"
     ],
     "testFiles": [
         "test.ts"
