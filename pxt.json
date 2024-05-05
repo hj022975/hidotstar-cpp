@@ -11,6 +11,7 @@
         "main.ts",
         "README.md",
         "spiSendBuffer.cpp",
+        "spiSendBuffer.h",
         "enums.d.ts",
         "shims.d.ts"
     ],
