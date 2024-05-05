@@ -4,6 +4,7 @@
 
 #include "pxt.h"
 #include "pxtbase.h"
+#include "spiSendBuffer.h"
 #include <cstdint>
 #include <math.h>
 
@@ -13,16 +14,13 @@ namespace hidotstar {
 
 	//%
 	void spiDotStarSendBuffer(Buffer buf, int len) {
-/*
 		SPI* spi = pins::allocSPI();
 		// Send zero frame initially
 		for (int8_t i = 0; i < 4; i++) {
 			spi->write(0x00);
 		}
-*/
 		int offset;
 		uint8_t* bufPtr = buf->data;
-/*
 		// Send values from buffer
 		for(int8_t i = 0; i < len; i++) {
 			offset = i*3;
@@ -36,6 +34,5 @@ namespace hidotstar {
 		for (int8_t i = 0; i < 4; i++) {
 			spi->write(0xff);
 		}		
-*/
 	}
 }
