@@ -216,7 +216,7 @@ namespace hidotstar {
          * dummy function pass through for C function
          */
         //% blockId="spi_dotstar_send_buffer" blockHidden=true 
-        //% shim=hidotstar::spiDotStarSendBuffer
+        //% shim=hidotstar::spiDotStarSendBufferXXX
         spiSendBuffer(buf: Buffer, len: number): void {
         }
 
@@ -228,8 +228,7 @@ namespace hidotstar {
         //% weight=79
         //% parts="hidotstar"
         show() {
-//            this.spiSendBuffer(this.buf, this._length);
-            this.setMatrixWidth(this._length);
+            this.spiSendBuffer(this.buf, this._length);
         }
 
         /**
