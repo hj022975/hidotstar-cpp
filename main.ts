@@ -228,7 +228,8 @@ namespace hidotstar {
         //% weight=79
         //% parts="hidotstar"
         show() {
-            this.spiSendBuffer(this.buf, this._length);
+//            this.spiSendBuffer(this.buf, this._length);
+            this.setMatrixWidth(this._length);
         }
 
         /**
