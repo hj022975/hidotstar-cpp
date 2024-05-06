@@ -210,14 +210,14 @@ namespace hidotstar {
             this.setPixelColor(m, rgb);
         }
 
-	    /**
-	     * @param buf Buffer to send
-	     * @param len Number of pixels to send data for
-	     * dummy function pass through for C function
-	     */
-        //% blockId=hidotstar_spi_dotstar_send_buffer blockHidden=true 
+        /**
+         * @param buf Buffer to send
+         * @param len Number of pixels to send data for
+         * dummy function pass through for C function
+         */
+        //% blockId="spi_dotstar_send_buffer" blockHidden=true 
         //% shim=hidotstar::spiDotStarSendBuffer
-        spiSendBuffer(): void {
+        spiSendBuffer(buf: Buffer, len: number): void {
         }
 
         /**
@@ -228,11 +228,8 @@ namespace hidotstar {
         //% weight=79
         //% parts="hidotstar"
         show() {
-let sss = new Strip();
-let bbb: Buffer;
-let lll: number;
-            sss.spiSendBuffer();
-	}
+            this.spiSendBuffer(this.buf, this._length);
+        }
 
         /**
          * Turn off all LEDs.
