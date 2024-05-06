@@ -216,8 +216,9 @@ namespace hidotstar {
          * dummy function pass through for C function
          */
         //% blockId="spi_dotstar_send_buffer" blockHidden=true 
-        //% shim=hidotstar::spiDotStarSendBufferXXX
+        //% shim=hidotstar::spiDotStarSendBuffer
         spiSendBuffer(buf: Buffer, len: number): void {
+return;
         }
 
         /**
