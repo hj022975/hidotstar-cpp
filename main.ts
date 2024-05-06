@@ -215,9 +215,9 @@ namespace hidotstar {
 	     * @param len Number of pixels to send data for
 	     * dummy function pass through for C function
 	     */
-        //% blockId=brightboard_spi_dotstar_send_buffer blockHidden=true 
+        //% blockId=hidotstar_spi_dotstar_send_buffer blockHidden=true 
         //% shim=hidotstar::spiDotStarSendBuffer
-        SendBuffer(): void {
+        spiSendBuffer(): void {
         }
 
         /**
@@ -231,7 +231,7 @@ namespace hidotstar {
 let sss = new Strip();
 let bbb: Buffer;
 let lll: number;
-            sss.SendBuffer();
+            sss.spiSendBuffer();
 	}
 
         /**
