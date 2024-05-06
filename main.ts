@@ -228,9 +228,10 @@ namespace hidotstar {
         //% weight=79
         //% parts="hidotstar"
         show() {
+let sss = new Strip();
 let bbb: Buffer;
 let lll: number;
-            this.SendBuffer(bbb, lll);
+            sss.SendBuffer(bbb, lll);
 	}
 
         /**
