@@ -211,17 +211,6 @@ namespace hidotstar {
         }
 
         /**
-         * @param buf Buffer to send
-         * @param len Number of pixels to send data for
-         * dummy function pass through for C function
-         */
-        //% blockId="spi_dotstar_send_buffer" blockHidden=true 
-        //% shim=hidotstar::spiDotStarSendBuffer
-        spiSendBuffer(buf: Buffer, len: number): void {
-            return; //## seems to be necessary
-        }
-
-        /**
          * Send all the changes to the strip.
          */
         //% blockId="hidotstar_show" block="%strip|show" blockGap=8
@@ -229,7 +218,7 @@ namespace hidotstar {
         //% weight=79
         //% parts="hidotstar"
         show() {
-            this.spiSendBuffer(this.buf, this._length);
+            spiSendBuffer(this.buf, this._length);
         }
 
         /**
@@ -518,6 +507,17 @@ namespace hidotstar {
         let g2 = g$ + m2;
         let b2 = b$ + m2;
         return packRGB(r2, g2, b2);
+    }
+
+    /**
+     * @param buf Buffer to send
+     * @param len Number of pixels to send data for
+     * dummy function pass through for C function
+     */
+    //% blockId="spi_dotstar_send_buffer" blockHidden=true 
+    //% shim=hidotstar::spiDotStarSendBuffer
+    export function spiSendBuffer(buf: Buffer, len: number): void {
+        return; //## seems to be necessary
     }
 
     export enum HueInterpolationDirection {
