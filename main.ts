@@ -218,7 +218,7 @@ namespace hidotstar {
         //% blockId="spi_dotstar_send_buffer" blockHidden=true 
         //% shim=hidotstar::spiDotStarSendBuffer
         spiSendBuffer(buf: Buffer, len: number): void {
-return;
+            return; //## seems to be necessary
         }
 
         /**
