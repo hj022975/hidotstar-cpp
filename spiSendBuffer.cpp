@@ -13,7 +13,7 @@ using namespace pxt;
 namespace hidotstar {
 
 	//%
-	void spiDotStarSendBuffer(Buffer buf, int len) {
+	void spiDotStarSendBuffer() {
 /*
 		SPI* spi = pins::allocSPI();
 		// Send zero frame initially

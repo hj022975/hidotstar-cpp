@@ -217,7 +217,7 @@ namespace hidotstar {
 	     */
         //% blockId=brightboard_spi_dotstar_send_buffer blockHidden=true 
         //% shim=hidotstar::spiDotStarSendBuffer
-        SendBuffer(buf: Buffer, len: number): void {
+        SendBuffer(): void {
         }
 
         /**
@@ -231,7 +231,7 @@ namespace hidotstar {
 let sss = new Strip();
 let bbb: Buffer;
 let lll: number;
-            sss.SendBuffer(bbb, lll);
+            sss.SendBuffer();
 	}
 
         /**
