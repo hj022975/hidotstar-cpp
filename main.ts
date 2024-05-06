@@ -228,7 +228,7 @@ namespace hidotstar {
         //% weight=79
         //% parts="hidotstar"
         show() {
-            this.SendBuffer(this.buf, this._length);
+//////////////////            this.SendBuffer(this.buf, this._length);
 	}
 
         /**
