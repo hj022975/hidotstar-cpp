@@ -516,6 +516,7 @@ namespace hidotstar {
      */
     //% blockId="spi_dotstar_send_buffer" blockHidden=true 
     //% shim=hidotstar::spiDotStarSendBuffer
+    //## function may not be inside the class
     export function spiSendBuffer(buf: Buffer, len: number): void {
         return; //## seems to be necessary
     }
