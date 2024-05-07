@@ -15,7 +15,7 @@ namespace hidotstar {
 	//%
 	void spiDotStarSendBuffer(Buffer buf, int len) {
 		SPI* spi = pins::allocSPI();
-	    spi->frequency(40000);
+	    spi->frequency(16000000);
 		// Send zero frame initially
 		for (int8_t i = 0; i < 4; i++) {
 			spi->write(0x00);
