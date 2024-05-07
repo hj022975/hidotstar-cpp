@@ -3,7 +3,6 @@
 
 namespace pins {
 	extern SPI* allocSPI();
-	extern void spiFormat(int bits, int mode);
 }
 
 #endif
